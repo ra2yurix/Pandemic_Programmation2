@@ -2,15 +2,15 @@
 from random import randrange
 
 
-class Position:
-    """Represents a position in a square grid.
+class Location:
+    """Represents a location in a square grid.
 
     :author: Peter Sander
     :author: ZHENG Yannan
     """
 
     def __init__(self, row=None, col=None, min=0, max=50):
-        """Initialize the position.
+        """Initialize the location.
 
         If the row and column args are absent,
         then random default values are generated, with
@@ -21,13 +21,13 @@ class Position:
 
     def __str__(self):
         """
-        :return: A string representation of the position.
+        :return: A string representation of the location.
         """
         return f'({self.row}, {self.col})'
 
 
-class Direction(Position):
-    """Represents a direction.
+class Velocity(Location):
+    """Represents a velocity.
 
     -1 <= row, col <= 1
     :author: Peter Sander
@@ -45,5 +45,5 @@ class Direction(Position):
 
 
 if __name__ == '__main__':
-    print(f'default random: {[Direction().__str__() for i in range(10)]}')
-    print(f'non-random: {[Direction(-1, 0).__str__() for i in range(10)]}')
+    print(f'default random: {[Velocity().__str__() for i in range(10)]}')
+    print(f'non-random: {[Velocity(-1, 0).__str__() for i in range(10)]}')

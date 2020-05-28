@@ -29,19 +29,19 @@ class SimulatorView():
         self.fieldView.grid(row = 0, columnspan = 3)
         self.frame.grid()
 
-    def showStatus(self, step, particles: list) -> None:
+    def showStatus(self, step, sapienss: list) -> None:
         """Show the current status of the field.
 
         :step: Which iteration step it is.
-        :particles: List of particle for calculating status.
+        :sapienss: List of sapiens for calculating status.
         """
         self.stepLabel['text'] = SimulatorView._STEP_PREFIX + str(step)
-        self.population['text'] = SimulatorView._POPULATION_PREFIX + str(particles.__len__())
+        self.population['text'] = SimulatorView._POPULATION_PREFIX + str(sapienss.__len__())
         self.fieldView.preparePaint()
         self.fieldView.delete('all')
-        for particle in particles:
-            self.fieldView.drawMark(particle.position.row, particle.position.col,
-                                    particle.colour)
+        for sapiens in sapienss:
+            self.fieldView.drawMark(sapiens.location.row, sapiens.location.col,
+                                    sapiens.colour)
         ##self.frame.update_idletasks()
         self.frame.update()
 

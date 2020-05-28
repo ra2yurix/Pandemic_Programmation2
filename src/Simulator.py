@@ -1,8 +1,8 @@
 import random
 import time
 from Field import Field
-from Particle import Particle
-from Position import Direction, Position
+from Sapiens import Sapiens
+from Location import Velocity, Location
 from Randomizer import Randomizer
 from SimulatorView import SimulatorView
 
@@ -14,18 +14,18 @@ class Simulator():
     :author: ZHENG Yannan
     """
 
-    def __init__(self, root: object, size=50, num_particle=50):
+    def __init__(self, root: object, size=50, num_Sapien=50):
         """Create a simulation with the given field size.
 
         :root: tkinter.Tk graphics object
         """
         self.size = size
-        self._particles = []  # all particles in the simulation
+        self._Sapiens = []  # all Sapiens in the simulation
         self._field = Field(size)
         self.step = 0
         self._view = SimulatorView(root, size)
         self._colours = ('red', 'green', 'blue', 'yellow', 'magenta', 'cyan')
-        self.reset(num_particle)
+        self.reset(num_Sapien)
 
     def runLongSimulation(self) -> None:
         """Run the simulation from its current state for a reasonably
@@ -50,28 +50,28 @@ class Simulator():
         """Run the simulation from its current state for a single step.
         """
         self.step += 1
-        #  all _particles in motion
-        for particle in self._particles:
-            particle.move()
-        self._view.showStatus(self.step, self._particles)
+        #  all _Sapiens in motion
+        for Sapiens in self._Sapiens:
+            Sapiens.move()
+        self._view.showStatus(self.step, self._Sapiens)
 
-    def reset(self, num_particle):
-        """Reset the simulation to a starting position.
+    def reset(self, num_Sapien):
+        """Reset the simulation to a starting location.
         """
         self.step = 0
-        self._particles = []
-        self.populate(num_particle)
-        self._view.showStatus(self.step, self._particles)
+        self._Sapiens = []
+        self.populate(num_Sapien)
+        self._view.showStatus(self.step, self._Sapiens)
 
-    def populate(self, num_particle=50):
-        """Populates the _field with randomly-positioned _particles.
+    def populate(self, num_Sapien=50):
+        """Populates the _field with randomly-locationed _Sapiens.
         """
         self._field.clear()
-        for p in range(num_particle):
-            position = Position(max=self.size)  # generate 0 <= random Position < size
-            direction = Direction()
+        for p in range(num_Sapien):
+            location = Location(max=self.size)  # generate 0 <= random Location < size
+            velocity = Velocity()
             color = self._colours[random.randint(0, self._colours.__len__() - 1)]
-            particle_new = Particle(position, direction, color, self._field)
-            self._particles.append(particle_new)
-            # generate random -1 <= random Direction < 1
-            # store particle with position and direction
+            Sapien_new = Sapiens(location, velocity, color, self._field)
+            self._Sapiens.append(Sapien_new)
+            # generate random -1 <= random Velocity < 1
+            # store Sapiens with location and velocity
