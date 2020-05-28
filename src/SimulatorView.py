@@ -22,11 +22,11 @@ class SimulatorView():
         self.frame = tkinter.Frame(root)
         # graphics initializations
         self.stepLabel = tkinter.Label(self.frame, text=SimulatorView._STEP_PREFIX)
-        self.stepLabel.grid(row = 1, column = 1)
+        self.stepLabel.grid(row=1, column=1)
         self.population = tkinter.Label(self.frame, text=SimulatorView._POPULATION_PREFIX)
-        self.population.grid(row = 1, column = 2)
+        self.population.grid(row=1, column=2)
         self.fieldView = FieldView(self.frame, size)
-        self.fieldView.grid(row = 0, columnspan = 3)
+        self.fieldView.grid(row=0, columnspan=3)
         self.frame.grid()
 
     def showStatus(self, step, sapienss: list) -> None:

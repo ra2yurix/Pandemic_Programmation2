@@ -24,7 +24,7 @@ class Field():
         :location: The location to clear, or None to empty the field.
         """
         if location is None:
-            self._field = [[None]*self.size for i in range(self.size)]
+            self._field = [[None] * self.size for i in range(self.size)]
         else:
             self._field[location.row][location.col] = None
 
