@@ -1,6 +1,6 @@
 import Field
 from Location import Velocity, Location
-
+from State import State
 
 class Sapiens:
     """Represents a sapiens in movement with a location
@@ -11,7 +11,7 @@ s
     """
 
     def __init__(self, location: Location, velocity: Velocity,
-                 colour: str, field: Field):
+                 colour: str, field: Field, state = State.SUSCEPTIBLE):
         """Initialize a sapiens.
 
         :colour: sapiens colour.
@@ -21,6 +21,8 @@ s
         self.velocity = velocity
         self.colour = colour
         self.field = field
+        self.state = state
+        self.numberInfected = 0
 
     def move(self) -> None:
         """sapiens moves to a new location.

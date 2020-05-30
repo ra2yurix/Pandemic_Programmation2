@@ -5,7 +5,7 @@ from Sapiens import Sapiens
 from Location import Velocity, Location
 from Randomizer import Randomizer
 from SimulatorView import SimulatorView
-
+from State import State
 
 class Simulator():
     """Runs the brownian-motion simulation.
@@ -24,7 +24,11 @@ class Simulator():
         self._field = Field(size)
         self.step = 0
         self._view = SimulatorView(root, size)
-        self._colours = ('red', 'green', 'blue', 'yellow', 'magenta', 'cyan')
+        #self._colours = ('red', 'green', 'blue', 'yellow', 'magenta', 'cyan')
+        self.colours = {State.SUSCEPTIBLE: 'slate blue',
+                        State.INFECTED: 'red',
+                        State.RECOVERED: 'spring green',
+                        State.DEAD: 'black'}
         self.reset(num_sapiens)
 
     def runLongSimulation(self) -> None:
@@ -67,11 +71,19 @@ class Simulator():
         """Populates the _field with randomly-locationed _sapiens.
         """
         self._field.clear()
-        for p in range(num_sapiens):
+        for p in range(num_sapiens-1):
             location = Location(max=self.size)  # generate 0 <= random Location < size
             velocity = Velocity()
-            color = self._colours[random.randint(0, self._colours.__len__() - 1)]
+            #color = self._colours[random.randint(0, self._colours.__len__() - 1)]
+            color = self.colours[State.SUSCEPTIBLE];
             Sapien_new = Sapiens(location, velocity, color, self._field)
             self._sapiens.append(Sapien_new)
             # generate random -1 <= random Velocity < 1
             # store sapiens with location and velocity
+
+        #one infected
+        location = Location(max=self.size)
+        velocity = Velocity()
+        color = self.colours[State.INFECTED];
+        Sapien_new = Sapiens(location, velocity, color, self._field)
+        self._sapiens.append(Sapien_new)
