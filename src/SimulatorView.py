@@ -11,6 +11,7 @@ class SimulatorView():
     a circle.
     :author: David J. Barnes and Michael Kolling
     :author: Peter Sander
+    :author: ZHENG Yannan
     """
     # class attributes
     _EMPTY_COLOR = 'white'

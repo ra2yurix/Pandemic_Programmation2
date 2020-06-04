@@ -11,6 +11,7 @@ class Field():
     Each location is able to store a single Sapiens.
     :author: David J. Barnes and Michael Kolling
     :author: Peter Sander
+    :author: ZHENG Yannan
     """
     _rand = Randomizer.getRandom().random
 

@@ -13,6 +13,7 @@ def collisions(Sapiens: Sapiens, radius: int) -> Location:
 
     The returned location will be within the bounds of the field.
     :return: A valid location within the grid area, otherwise None.
+    :author: ZHENG Yannan
     """
     next_pos = Location(Sapiens.location.row + Sapiens.velocity.row,
                         Sapiens.location.col + Sapiens.velocity.col)
