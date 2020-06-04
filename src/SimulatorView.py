@@ -1,4 +1,6 @@
 import tkinter
+import Stats
+
 
 
 class SimulatorView():
@@ -13,7 +15,8 @@ class SimulatorView():
     # class attributes
     _EMPTY_COLOR = 'white'
     _STEP_PREFIX = "Step: "
-    _POPULATION_PREFIX = "Population: "
+    # _POPULATION_PREFIX = "Population: "
+    _STATS_PREFIX = "States: "
 
     def __init__(self, root: object, size):
         """Create a view with the given size.
@@ -22,9 +25,12 @@ class SimulatorView():
         self.frame = tkinter.Frame(root)
         # graphics initializations
         self.stepLabel = tkinter.Label(self.frame, text=SimulatorView._STEP_PREFIX)
-        self.stepLabel.grid(row=1, column=1)
-        self.population = tkinter.Label(self.frame, text=SimulatorView._POPULATION_PREFIX)
-        self.population.grid(row=1, column=2)
+        self.stepLabel.grid(row=1, column=0)
+        # self.population = tkinter.Label(self.frame, text=SimulatorView._POPULATION_PREFIX)
+        # self.population.grid(row=1, column=2)
+        self.statsLabel = tkinter.Label(self.frame, text = SimulatorView._STATS_PREFIX)
+        self.statsLabel.grid(row=1,column=2)
+
         self.fieldView = FieldView(self.frame, size)
         self.fieldView.grid(row=0, columnspan=3)
         self.frame.grid()
@@ -36,7 +42,9 @@ class SimulatorView():
         :sapienses: List of sapiens for calculating status.
         """
         self.stepLabel['text'] = SimulatorView._STEP_PREFIX + str(step)
-        self.population['text'] = SimulatorView._POPULATION_PREFIX + str(sapienses.__len__())
+        # self.population['text'] = SimulatorView._POPULATION_PREFIX + str(sapienses.__len__())
+        self.statsLabel['text'] = SimulatorView._STATS_PREFIX + "['S=" + str(Stats.S) +"' ,'I="+str(Stats.I)+"' ,'R="+str(Stats.R)+"' ,'D="+str(Stats.D)+"' ] R="+str(Stats.calculateR(sapienses))
+
         self.fieldView.preparePaint()
         self.fieldView.delete('all')
         for sapiens in sapienses:

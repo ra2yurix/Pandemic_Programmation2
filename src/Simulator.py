@@ -6,6 +6,8 @@ from Location import Velocity, Location
 from Randomizer import Randomizer
 from SimulatorView import SimulatorView
 from State import State
+import Stats
+import Virus
 
 class Simulator():
     """Runs the brownian-motion simulation.
@@ -14,7 +16,7 @@ class Simulator():
     :author: ZHENG Yannan
     """
 
-    def __init__(self, root: object, size=50, num_sapiens=50):
+    def __init__(self, root: object, size=50, num_sapiens=50,num_infected=20):
         """Create a simulation with the given field size.
 
         :root: tkinter.Tk graphics object
@@ -22,13 +24,16 @@ class Simulator():
         self.size = size
         self._sapiens = []  # all sapiens in the simulation
         self._field = Field(size)
-        self.step = 0
+        Stats.step = 0
         self._view = SimulatorView(root, size)
         #self._colours = ('red', 'green', 'blue', 'yellow', 'magenta', 'cyan')
         self.colours = {State.SUSCEPTIBLE: 'slate blue',
                         State.INFECTED: 'red',
                         State.RECOVERED: 'spring green',
                         State.DEAD: 'black'}
+        Stats.I = num_infected
+        Stats.S = num_sapiens - num_infected
+        Stats.I0 = Stats.I
         self.reset(num_sapiens)
 
     def runLongSimulation(self) -> None:
@@ -44,34 +49,40 @@ class Simulator():
         :delay: Time (in secs) between each iteration.
         """
 
-        self.step = 1
-        while self.step <= numSteps:
-            self.simulateOneStep()
-            # self.step += 1
+        Stats.step = 1
+        while Stats.step <= numSteps:
+            if Stats.isViable()==True:
+                self.simulateOneStep()
+                Stats.I0 = Stats.I
+
             time.sleep(delay)
 
     def simulateOneStep(self) -> None:
         """Run the simulation from its current state for a single step.
         """
-        self.step += 1
+        Stats.step += 1
         #  all _sapiens in motion
         for Sapiens in self._sapiens:
-            Sapiens.move()
-        self._view.showStatus(self.step, self._sapiens)
+            if Stats.step == Sapiens.r_or_d:
+                Sapiens.if_I_die()
+            if Sapiens.colour != 'black':
+                Sapiens.move()
+        self._view.showStatus(Stats.step, self._sapiens)
+
 
     def reset(self, num_sapiens):
         """Reset the simulation to a starting location.
         """
-        self.step = 0
+        Stats.step = 0
         self._sapiens = []
         self.populate(num_sapiens)
-        self._view.showStatus(self.step, self._sapiens)
+        self._view.showStatus(Stats.step, self._sapiens)
 
     def populate(self, num_sapiens=50):
         """Populates the _field with randomly-locationed _sapiens.
         """
         self._field.clear()
-        for p in range(num_sapiens-1):
+        for p in range(Stats.S):
             location = Location(max=self.size)  # generate 0 <= random Location < size
             velocity = Velocity()
             #color = self._colours[random.randint(0, self._colours.__len__() - 1)]
@@ -80,10 +91,10 @@ class Simulator():
             self._sapiens.append(Sapien_new)
             # generate random -1 <= random Velocity < 1
             # store sapiens with location and velocity
-
-        #one infected
-        location = Location(max=self.size)
-        velocity = Velocity()
-        color = self.colours[State.INFECTED];
-        Sapien_new = Sapiens(location, velocity, color, self._field)
-        self._sapiens.append(Sapien_new)
+        for p in range(Stats.I):
+            location = Location(max=self.size)
+            velocity = Velocity()
+            color = self.colours[State.INFECTED];
+            Sapien_new = Sapiens(location, velocity, color, self._field)
+            Sapien_new.r_or_d = Virus.RECOVERY_TIME
+            self._sapiens.append(Sapien_new)

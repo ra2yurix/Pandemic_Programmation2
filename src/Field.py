@@ -44,67 +44,67 @@ class Field():
         """
         return self._field[location.row][location.col]
 
-    def freeAdjacentLocation(self, Sapiens: Sapiens, radius: int) -> Location:
-        """Try to find a free location that is adjacent to the given Sapiens's
-        location.
-
-        The returned location will be within the bounds of the field.
-        :return: A valid location within the grid area, otherwise None.
-        """
-        next_pos = Location(Sapiens.location.row + Sapiens.velocity.row,
-                            Sapiens.location.col + Sapiens.velocity.col)
-        next_dir = Velocity(Sapiens.velocity.row, Sapiens.velocity.col)
-
-        if next_pos.col <= 0 or next_pos.col >= self.size - 1:
-            next_pos.col = Sapiens.location.col - next_dir.col
-            next_dir.col = - next_dir.col
-        if next_pos.row <= 0 or next_pos.row >= self.size - 1:
-            next_pos.row = Sapiens.location.row - next_dir.row
-            next_dir.row = -next_dir.row
-
-        if self.getObjectAt(next_pos):
-            r = self._field[next_pos.row][next_pos.col].velocity.row
-            c = self._field[next_pos.row][next_pos.col].velocity.col
-            self._field[next_pos.row][next_pos.col].velocity.row = next_dir.row
-            self._field[next_pos.row][next_pos.col].velocity.col = next_dir.col
-            next_dir.row = r
-            next_dir.col = c
-            next_pos.row = Sapiens.location.row + next_dir.row
-            next_pos.col = Sapiens.location.col + next_dir.col
-        if self.getObjectAt(next_pos):
-            r = self._field[next_pos.row][next_pos.col].velocity.row
-            c = self._field[next_pos.row][next_pos.col].velocity.col
-            self._field[next_pos.row][next_pos.col].velocity.row = next_dir.row
-            self._field[next_pos.row][next_pos.col].velocity.col = next_dir.col
-            next_dir.row = r
-            next_dir.col = c
-            next_pos.row = Sapiens.location.row + next_dir.row
-            next_pos.col = Sapiens.location.col + next_dir.col
-        if self.getObjectAt(next_pos):
-            r = self._field[next_pos.row][next_pos.col].velocity.row
-            c = self._field[next_pos.row][next_pos.col].velocity.col
-            self._field[next_pos.row][next_pos.col].velocity.row = next_dir.row
-            self._field[next_pos.row][next_pos.col].velocity.col = next_dir.col
-            next_dir.row = r
-            next_dir.col = c
-            next_pos.row = Sapiens.location.row + next_dir.row
-            next_pos.col = Sapiens.location.col + next_dir.col
-        if self.getObjectAt(next_pos):
-            r = self._field[next_pos.row][next_pos.col].velocity.row
-            c = self._field[next_pos.row][next_pos.col].velocity.col
-            self._field[next_pos.row][next_pos.col].velocity.row = next_dir.row
-            self._field[next_pos.row][next_pos.col].velocity.col = next_dir.col
-            next_dir.row = r
-            next_dir.col = c
-            next_pos.row = Sapiens.location.row + next_dir.row
-            next_pos.col = Sapiens.location.col + next_dir.col
-
-        Sapiens.velocity.row = next_dir.row
-        Sapiens.velocity.col = next_dir.col
-        if self.getObjectAt(
-                next_pos) or next_pos.col < 0 or next_pos.col >= self.size or next_pos.row < 0 or next_pos.row >= self.size:
-            return Sapiens.location
-        return next_pos
+    # def freeAdjacentLocation(self, Sapiens: Sapiens, radius: int) -> Location:
+    #     """Try to find a free location that is adjacent to the given Sapiens's
+    #     location.
+    #
+    #     The returned location will be within the bounds of the field.
+    #     :return: A valid location within the grid area, otherwise None.
+    #     """
+    #     next_pos = Location(Sapiens.location.row + Sapiens.velocity.row,
+    #                         Sapiens.location.col + Sapiens.velocity.col)
+    #     next_dir = Velocity(Sapiens.velocity.row, Sapiens.velocity.col)
+    #
+    #     if next_pos.col <= 0 or next_pos.col >= self.size - 1:
+    #         next_pos.col = Sapiens.location.col - next_dir.col
+    #         next_dir.col = - next_dir.col
+    #     if next_pos.row <= 0 or next_pos.row >= self.size - 1:
+    #         next_pos.row = Sapiens.location.row - next_dir.row
+    #         next_dir.row = -next_dir.row
+    #
+    #     if self.getObjectAt(next_pos):
+    #         r = self._field[next_pos.row][next_pos.col].velocity.row
+    #         c = self._field[next_pos.row][next_pos.col].velocity.col
+    #         self._field[next_pos.row][next_pos.col].velocity.row = next_dir.row
+    #         self._field[next_pos.row][next_pos.col].velocity.col = next_dir.col
+    #         next_dir.row = r
+    #         next_dir.col = c
+    #         next_pos.row = Sapiens.location.row + next_dir.row
+    #         next_pos.col = Sapiens.location.col + next_dir.col
+    #     if self.getObjectAt(next_pos):
+    #         r = self._field[next_pos.row][next_pos.col].velocity.row
+    #         c = self._field[next_pos.row][next_pos.col].velocity.col
+    #         self._field[next_pos.row][next_pos.col].velocity.row = next_dir.row
+    #         self._field[next_pos.row][next_pos.col].velocity.col = next_dir.col
+    #         next_dir.row = r
+    #         next_dir.col = c
+    #         next_pos.row = Sapiens.location.row + next_dir.row
+    #         next_pos.col = Sapiens.location.col + next_dir.col
+    #     if self.getObjectAt(next_pos):
+    #         r = self._field[next_pos.row][next_pos.col].velocity.row
+    #         c = self._field[next_pos.row][next_pos.col].velocity.col
+    #         self._field[next_pos.row][next_pos.col].velocity.row = next_dir.row
+    #         self._field[next_pos.row][next_pos.col].velocity.col = next_dir.col
+    #         next_dir.row = r
+    #         next_dir.col = c
+    #         next_pos.row = Sapiens.location.row + next_dir.row
+    #         next_pos.col = Sapiens.location.col + next_dir.col
+    #     if self.getObjectAt(next_pos):
+    #         r = self._field[next_pos.row][next_pos.col].velocity.row
+    #         c = self._field[next_pos.row][next_pos.col].velocity.col
+    #         self._field[next_pos.row][next_pos.col].velocity.row = next_dir.row
+    #         self._field[next_pos.row][next_pos.col].velocity.col = next_dir.col
+    #         next_dir.row = r
+    #         next_dir.col = c
+    #         next_pos.row = Sapiens.location.row + next_dir.row
+    #         next_pos.col = Sapiens.location.col + next_dir.col
+    #
+    #     Sapiens.velocity.row = next_dir.row
+    #     Sapiens.velocity.col = next_dir.col
+    #     if self.getObjectAt(
+    #             next_pos) or next_pos.col < 0 or next_pos.col >= self.size or next_pos.row < 0 or next_pos.row >= self.size:
+    #         return Sapiens.location
+    #     return next_pos
 
     def _adjacentLocations(self, Sapiens: Sapiens, radius) -> list:
         """Return a shuffled list of locations adjacent to the given one.
